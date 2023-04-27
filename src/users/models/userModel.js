@@ -10,14 +10,26 @@ const Users = sequelize.define('users', {
     },
     userName: {
         type: DataTypes.STRING,
+        unique: {
+            msg: 'This username already exists.',
+        },
         allowNull: false,
+        validate: {
+            notEmpty: {
+                msg: 'Username must be provided instead of empty string.',
+            },
+        },
     },
     email: {
         type: DataTypes.STRING,
+        unique: {
+            msg: 'This email already exists.',
+        },
         allowNull: false,
-        unique: true,
         validate: {
-            isEmail: true
+            isEmail: {
+                msg: 'Invalid email.',
+            },
         },
     },
 });
