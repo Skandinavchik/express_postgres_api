@@ -2,8 +2,11 @@ import dotenv from 'dotenv';
 dotenv.config({ path: './config.env' });
 import { Sequelize } from "sequelize";
 
-
-const sequelize = new Sequelize(process.env.DATABASE);
+const { HOST, DATABASE, USERNAME, PASSWORD, DIALECT } = process.env;
+const sequelize = new Sequelize(DATABASE, USERNAME, PASSWORD, {
+    host: HOST,
+    dialect: DIALECT,
+});
 
 sequelize.authenticate()
     .then(() => console.log('PostgreSQL connected 🫡'))
