@@ -15,7 +15,7 @@ const getAllUsers = async (req, res) => {
             });
         })
         .catch(err => {
-            res.status(404).json({
+            res.status(500).json({
                 status: 'failed',
                 message: err.message,
             });
@@ -29,7 +29,10 @@ const getUser = async (req, res) => {
     })
         .then(user => {
             if (!user) {
-                throw new Error(`No user with id: ${id}`);
+                res.status(404).json({
+                    status: 'failed',
+                    message: `No user with id: ${id}`,
+                });
             }
             res.status(200).json({
                 status: 'success',
@@ -37,7 +40,7 @@ const getUser = async (req, res) => {
             });
         })
         .catch(err => {
-            res.status(404).json({
+            res.status(500).json({
                 status: 'failed',
                 message: err.message,
             });
@@ -53,7 +56,7 @@ const createUser = async (req, res) => {
             });
         })
         .catch(err => {
-            res.status(400).json({
+            res.status(500).json({
                 status: 'failed',
                 message: err.message,
             });
@@ -62,19 +65,34 @@ const createUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
     await Users.update(req.body, { where: { id: req.params.id } })
-        .then(user => {
+        .then(() => {
             res.status(200).json({
                 status: 'success',
-                user,
+                message: 'User updated.',
             });
-            console.log(user);
         })
         .catch(err => {
-            res.status(400).json({
+            res.status(500).json({
                 status: 'failed',
                 message: err.message,
             });
         });
 };
 
-export { getAllUsers, getUser, createUser, updateUser };
+const deleteUser = async (req, res) => {
+    await Users.destroy({ where: { id: req.params.id } })
+        .then(() => {
+            res.status(200).json({
+                status: 'success',
+                message: 'User deleted.',
+            });
+        })
+        .catch(err => {
+            res.status(500).json({
+                status: 'failed',
+                message: err.message,
+            });
+        });
+};
+
+export { getAllUsers, getUser, createUser, updateUser, deleteUser };
