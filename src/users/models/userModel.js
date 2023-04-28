@@ -18,6 +18,7 @@ const Users = sequelize.define('users', {
             notEmpty: {
                 msg: 'Username must be provided instead of empty string.',
             },
+            len: [0, 40],
         },
     },
     email: {
@@ -30,6 +31,14 @@ const Users = sequelize.define('users', {
             isEmail: {
                 msg: 'Invalid email.',
             },
+            len: [0, 40],
+        },
+    },
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            is: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,40}$/,
         },
     },
 });

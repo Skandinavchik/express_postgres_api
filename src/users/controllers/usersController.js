@@ -6,7 +6,11 @@ const getAllUsers = async (req, res) => {
     })
         .then(users => {
             if (users.length === 0) {
-                throw new Error('No users');
+                res.status(200).json({
+                    status: 'success',
+                    message: 'No users',
+                });
+                return;
             }
             res.status(200).json({
                 status: 'success',
@@ -28,15 +32,16 @@ const getUser = async (req, res) => {
         where: { id: req.params.id },
     })
         .then(user => {
-            if (!user) {
+            if (user.length === 0) {
                 res.status(404).json({
                     status: 'failed',
-                    message: `No user with id: ${id}`,
+                    message: `No user with id: ${req.params.id}`,
                 });
+                return;
             }
             res.status(200).json({
                 status: 'success',
-                user,
+                user: user[0],
             });
         })
         .catch(err => {
@@ -68,7 +73,7 @@ const updateUser = async (req, res) => {
         .then(() => {
             res.status(200).json({
                 status: 'success',
-                message: 'User updated.',
+                message: 'User updated',
             });
         })
         .catch(err => {
@@ -84,7 +89,7 @@ const deleteUser = async (req, res) => {
         .then(() => {
             res.status(200).json({
                 status: 'success',
-                message: 'User deleted.',
+                message: 'User deleted',
             });
         })
         .catch(err => {

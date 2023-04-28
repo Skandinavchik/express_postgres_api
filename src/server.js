@@ -9,7 +9,7 @@ import { Users } from './users/models/userModel.js';
 const host = process.env.HOST;
 const port = process.env.PORT || 8000;
 
-sequelize.sync()
+sequelize.sync({ force: true })
     .then(() => {
         app.listen(port, host, () => {
             console.log(`Server is running on ${host}:${port} 👌`)
