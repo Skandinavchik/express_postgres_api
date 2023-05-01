@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import { DataTypes } from "sequelize";
 import { sequelize } from '../../dataBase.js';
 
@@ -41,6 +42,15 @@ const Users = sequelize.define('users', {
             is: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,40}$/,
         },
     },
+},
+{
+    hooks: {
+        beforeCreate: async (user) => {
+            const salt = await bcrypt.genSalt(12, 'b');
+            user.password = await bcrypt.hash(user.password, salt);
+        },
+    },
 });
+
 
 export { Users };
