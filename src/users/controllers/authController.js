@@ -17,6 +17,7 @@ const userSignUp = async (req, res) => {
             email,
             password,
         });
+
         const token = signToken(user.id);
 
         res.cookie('jwt', token, {
@@ -68,7 +69,7 @@ const userSignIn = async (req, res) => {
 
         res.status(200).json({
             status: 'success',
-            message: `Hello, USER`
+            message: `Hello, ${user.userName}`
         });
 
     } catch (error) {

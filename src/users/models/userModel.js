@@ -57,7 +57,7 @@ const Users = sequelize.define('users', {
     },
 });
 
-Users.prototype.comparePasswords = function(candidadePassword, userPassword) {
+Users.prototype.comparePasswords = (candidadePassword, userPassword) => {
     return bcrypt.compare(candidadePassword, userPassword);
 };
 
