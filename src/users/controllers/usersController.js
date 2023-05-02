@@ -3,7 +3,9 @@ import { Users } from "../models/userModel.js";
 const getAllUsers = async (req, res) => {
     try {
         const users = await Users.findAll({
-            attributes: ['id', 'userName', 'email', 'password'],
+            attributes: {
+                exclude: ['password'],
+            },
         });
 
         if (users.length === 0) {
@@ -33,7 +35,9 @@ const getUser = async (req, res) => {
     try {
         const { id } = req.params;
         const user = await Users.findAll({
-            attributes: ['id', 'userName', 'email'],
+            attributes: {
+                exclude: ['password'],
+            },
             where: { id },
         });
 

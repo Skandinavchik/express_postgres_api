@@ -42,6 +42,11 @@ const Users = sequelize.define('users', {
             is: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,40}$/,
         },
     },
+    role: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: 'guest',
+    },
 },
 {
     hooks: {
@@ -51,6 +56,10 @@ const Users = sequelize.define('users', {
         },
     },
 });
+
+Users.prototype.comparePasswords = function(candidadePassword, userPassword) {
+    return bcrypt.compare(candidadePassword, userPassword);
+};
 
 
 export { Users };
