@@ -9,7 +9,7 @@ const sequelize = new Sequelize(DATABASE, USERNAME, PASSWORD, {
 });
 
 sequelize.authenticate()
-    .then(() => console.log('PostgreSQL connected 🫡'))
+    .then(() => console.log(`===== PostgreSQL connected 🫡  =====`))
     .catch(error => console.error('Unable to connect to the database:', error));
 
 
